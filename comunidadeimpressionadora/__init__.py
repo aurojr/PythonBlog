@@ -26,7 +26,7 @@ from comunidadeimpressionadora import models
 
 engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 inspector = sa.inspect(engine)
-if not sa.reflection.Inspector.has_table(inspector, 'usuario'):
+if not sa.engine.reflection.Inspector.has_table(inspector, 'usuario'):
     with app.app_context():
         database.drop_all()
         database.create_all()
