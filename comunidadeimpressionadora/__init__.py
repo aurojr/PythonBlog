@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import os
 import sqlalchemy
-from sqlalchemy import inspect, Inspector
+from sqlalchemy import inspect, Inspector, inspection
 
 app = Flask(__name__)
 
@@ -26,7 +26,7 @@ from comunidadeimpressionadora import models
 
 engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 inspector = sqlalchemy.inspect(engine)
-if not inspector.has_table('usuario'):
+if not sqlalchemy.engine.reflection.Inspector.has_table(inspection, "usuario"):
     with app.app_context():
         database.drop_all()
         database.create_all()
